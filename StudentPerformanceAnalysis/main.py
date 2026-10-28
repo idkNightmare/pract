@@ -23,3 +23,23 @@ max_grate=df.iloc[:,2:].max().max()
 min_grate=df.iloc[:,2:].min().min()
 print('-'*30)
 print(f'Максимальна оцінка в журналі - {max_grate} \nМінімальна оцінка в журналі - {min_grate}')
+
+print(f'Кількість студентів з початковим рівнем - {df[df["Середній бал"] <= 3].shape[0]}')
+print(f'Кількість студентів з середнім балом ниже семи - {df[df["Середній бал"] < 7].shape[0]}')
+
+df['status']=np.where(df['Середній бал']>7,'Добре','Потребує уваги')
+print(df)
+
+plt.figure(figsize=(14, 10),layout='constrained')
+
+plt.subplot(311)
+plt.bar(df['№'],df['Середній бал'],color=np.where(df['status']=='Добре','blue','red'),label='Середні бали студентів з групи КІПЗс-25-3')
+plt.xticks(df['№'],df['Студент'], rotation=90, ha='right')
+plt.yticks(range(1,13))
+plt.xlabel('ПІБ Студентів', fontsize=12)
+plt.ylabel('Бали (1-12)', fontsize=12)
+plt.legend(loc='upper right')
+plt.show()
+
+plt.subplot(311)
+plt.plot()
