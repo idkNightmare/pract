@@ -64,8 +64,15 @@ plt.xticks(range(1, 13))
 plt.savefig('grades_distribution.png') 
 plt.show()
 
-def sort_students(data):
-    return data.sort_values(by='Середній бал', ascending=False)
+def sort_students(df):
+    n = len(df)
+    for i in range(n):
+        for j in range(n - 1 - i):
+            if df['Середній бал'].iloc[j] < df['Середній бал'].iloc[j + 1]:
+                df.iloc[j], df.iloc[j + 1] = df.iloc[j + 1].copy(), df.iloc[j].copy()
+    return df
+
+
 
 def find_student(data, name):
     result = data[data['Студент'].str.strip().str.lower() == name.strip().lower()]
@@ -76,9 +83,9 @@ def find_student(data, name):
         print(f"\nСтудента '{name}' не знайдено.")
         
 df_sorted = sort_students(df)
-find_student(df, df['Студент'].iloc[0])
+find_student(df_sorted, 'Ковальський Олександр Русланович')
     
-df['Оцінок 1–3'] = df[grade_columns].apply(lambda row: sum((row >= 1) & (row <= 3)), axis=1)
+df['Оцінок 1–3'] = df[grade_columns].notna().sum(axis=1)
 
 df_results = df[['Студент', 'Середній бал', 'Оцінок 1–3', 'status']].copy()
 df_results.columns = ['Студент', 'Середній бал', 'Оцінок 1–3', 'Статус']
