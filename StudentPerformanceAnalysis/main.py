@@ -86,7 +86,7 @@ df_sorted = sort_students(df)
 find_student(df_sorted, 'Ковальський Олександр Русланович')
     
 df['all_grades'] = df[grade_columns].notna().sum(axis=1)
-df['Оцінок 1–3'] = df[grade_columns].apply(lambda x: x[(x >= 1) & (x <= 3)].count(), axis=1)
+df['Оцінок 1–3'] = df[grade_columns].isin([1, 2, 3]).sum(axis=1)
 
 df_results = df[['Студент', 'Середній бал', 'Оцінок 1–3', 'status']].copy()
 df_results.columns = ['Студент', 'Середній бал', 'Оцінок 1–3', 'Статус']
