@@ -78,7 +78,7 @@ def find_student(data, name):
     result = data[data['Студент'].str.strip().str.lower() == name.strip().lower()]
     if not result.empty:
         row = result.iloc[0]
-        print(f"\nЗнайдено: {row['Студент']}\n -> Бал: {row['Середній бал']}\n -> Оцінок: {row[grade_columns].notna().sum()}\n -> Статус: {row['status']}")
+        print(f"\nЗнайдено: {row['Студент']}\n -> Номер в списку: {row['№']}\n -> Бал: {row['Середній бал']}\n -> Оцінок: {row[grade_columns].notna().sum()}\n -> Статус: {row['status']}")
     else:
         print(f"\nСтудента '{name}' не знайдено.")
         
